@@ -31,13 +31,14 @@ public class EnderecoController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Endereco> Post(Endereco endereco)
-    {
-        // Lógica para adicionar o endereço ao banco de dados ou outra fonte de dados
-        // ...
 
-        // Simulando uma resposta de sucesso com o endereço adicionado
-        return CreatedAtAction(nameof(GetById), new { id = endereco.Id }, endereco);
+    public async Task<IActionResult> Post(Endereco endereco)
+    {
+        await _context.Enderecos.AddAsync(endereco);
+
+        await _context.SaveChangesAsync();
+
+        return Ok(endereco);
     }
 
     [HttpPut("{id}")]
@@ -49,10 +50,6 @@ public class EnderecoController : ControllerBase
             return NotFound();
         }
 
-        // Lógica para atualizar o endereço no banco de dados ou outra fonte de dados
-        // ...
-
-        // Simulando uma resposta de sucesso
         return NoContent();
     }
 
@@ -61,7 +58,6 @@ public class EnderecoController : ControllerBase
     {
         var enderecos = _context.Enderecos.Where(e => e.PessoaId == pessoaId).ToList();
 
-        // Simulando uma resposta com a lista de endereços encontrados
         return Ok(enderecos);
     }
 }

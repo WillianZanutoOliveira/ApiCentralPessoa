@@ -31,10 +31,13 @@ public class PessoaTelefoneController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<PessoaTelefone> Post(PessoaTelefone pessoaTelefone)
+    public async Task<IActionResult> Post(PessoaTelefone pessoaTelefone)
     {
-        
-        return CreatedAtAction(nameof(GetById), new { id = pessoaTelefone.Id }, pessoaTelefone);
+        await _context.PessoasTelefones.AddAsync(pessoaTelefone);
+
+        await _context.SaveChangesAsync();
+
+        return Ok(pessoaTelefone);
     }
 
     [HttpPut("{id}")]
