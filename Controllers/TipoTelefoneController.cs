@@ -1,7 +1,4 @@
-﻿using ApiCentralPessoa.Dto;
-using Microsoft.EntityFrameworkCore;
-
-namespace ApiCentralPessoa.Controllers;
+﻿namespace ApiCentralPessoa.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
