@@ -41,14 +41,20 @@ public class TipoTelefoneController : ControllerBase
         return Ok(tipoTelefone);
     }
 
+
     [HttpPut("{id}")]
-    public IActionResult Put(int id, TipoTelefone tipoTelefone)
+    public async Task<IActionResult> Put(int id, TipoTelefone tipoTelefone)
     {
-        var tipoTelefoneExistente = _context.TiposTelefones.FirstOrDefault(e => e.Id == id);
+        var tipoTelefoneExistente = await _context.TiposTelefones.FindAsync(id);
+
         if (tipoTelefoneExistente == null)
         {
             return NotFound();
         }
+
+        tipoTelefoneExistente.AtualizarDescricao(tipoTelefone.Descricao);
+
+        await _context.SaveChangesAsync();
 
         return NoContent();
     }
