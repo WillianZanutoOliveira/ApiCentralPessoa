@@ -2,7 +2,7 @@
 global using Microsoft.EntityFrameworkCore;
 global using ApiCentralPessoa.Data;
 global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.OpenApi.Models;
+global using Microsoft.OpenApi;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using ApiCentralPessoa.Dto;
