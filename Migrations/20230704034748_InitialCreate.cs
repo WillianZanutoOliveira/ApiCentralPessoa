@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -13,18 +14,18 @@ namespace ApiCentralPessoa.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Pessoas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
@@ -32,45 +33,45 @@ namespace ApiCentralPessoa.Migrations
                 {
                     table.PrimaryKey("PK_Pessoas", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TiposTelefones",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Descricao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySQL:Charset", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiposTelefones", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Enderecos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Bairro = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     CEP = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Cidade = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Complemento = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Logradouro = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Numero = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Pais = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     UF = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     PessoaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -83,7 +84,7 @@ namespace ApiCentralPessoa.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "PessoasJuridicas",
@@ -91,11 +92,11 @@ namespace ApiCentralPessoa.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     CNPJ = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     RazaoSocial = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Sigla = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySQL:Charset", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -107,7 +108,7 @@ namespace ApiCentralPessoa.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "PessoasTelefone",
@@ -116,7 +117,7 @@ namespace ApiCentralPessoa.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     TipoTelefoneId = table.Column<int>(type: "int", nullable: false),
                     Telefone = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     SMS = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     WhatsApp = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
@@ -136,7 +137,7 @@ namespace ApiCentralPessoa.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Maes",
@@ -144,13 +145,13 @@ namespace ApiCentralPessoa.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     NomeMae = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySQL:Charset", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Maes", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Pais",
@@ -158,13 +159,13 @@ namespace ApiCentralPessoa.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     NomePai = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySQL:Charset", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pais", x => x.Id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "PessoasFisicas",
@@ -172,9 +173,9 @@ namespace ApiCentralPessoa.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     CPF = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     Genero = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("MySQL:Charset", "utf8mb4"),
                     DataNascimento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     MaeId = table.Column<int>(type: "int", nullable: false),
                     PaiId = table.Column<int>(type: "int", nullable: false),
@@ -202,7 +203,7 @@ namespace ApiCentralPessoa.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enderecos_PessoaId",

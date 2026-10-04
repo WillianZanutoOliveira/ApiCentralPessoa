@@ -30,15 +30,15 @@ The API models information related to:
 ## Tech stack
 
 - **C#**
-- **.NET 7**
+- **.NET 10**
 - **ASP.NET Core**
 - **Entity Framework Core**
 - **MySQL**
-- **Pomelo.EntityFrameworkCore.MySql**
+- **MySql.EntityFrameworkCore**
 - **AutoMapper**
 - **Swagger / OpenAPI**
 
-> This project was created in 2023 and is maintained as a public portfolio example of my .NET development history. My current work uses broader architectural, integration, cloud and delivery practices.
+> This project was created in 2023 and later modernized to **.NET 10**, with updated MySQL integration, safer configuration practices and CI validation.
 
 ## Architecture overview
 
@@ -62,7 +62,7 @@ ASP.NET Core Controllers
 
 ### Requirements
 
-- .NET 7 SDK
+- .NET 10 SDK
 - MySQL
 
 Clone the repository:
@@ -100,3 +100,26 @@ Showing that evolution is intentional: I use older public projects to demonstrat
 
 For current case studies and my professional profile:
 - https://github.com/WillianZanutoOliveira
+
+
+## Secure local configuration
+
+Database credentials are intentionally **not committed** to the repository.
+
+Configure the connection string using an environment variable or user-secrets.
+
+### PowerShell
+
+```powershell
+$env:ConnectionStrings__DefaultConnection="Server=localhost;Port=3306;Database=centralPessoa;Uid=YOUR_USER;Pwd=YOUR_PASSWORD;"
+dotnet run
+```
+
+### Bash
+
+```bash
+export ConnectionStrings__DefaultConnection="Server=localhost;Port=3306;Database=centralPessoa;Uid=YOUR_USER;Pwd=YOUR_PASSWORD;"
+dotnet run
+```
+
+This keeps credentials outside version control and better reflects production configuration practices.

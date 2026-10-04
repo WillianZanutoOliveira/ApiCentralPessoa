@@ -1,9 +1,12 @@
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException(
+        "Connection string 'DefaultConnection' was not configured. " +
+        "Use ConnectionStrings__DefaultConnection or user-secrets.");
+
 builder.Services.AddDbContext<CentralPessoaContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection") + ";CharSet=utf8mb4",
-        new MySqlServerVersion(new Version(8, 0, 26))));
+    options.UseMySQL(connectionString));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
