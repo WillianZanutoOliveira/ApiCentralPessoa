@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ master, modernize-dotnet-10 ]
+    branches: [ master, quality-hardening ]
   pull_request:
     branches: [ master ]
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,21 @@ jobs:
 
       - name: Build
         run: dotnet build ApiCentralPessoa.sln --configuration Release --no-restore
+
+      - name: Test with coverage
+        run: >
+          dotnet test ApiCentralPessoa.sln
+          --configuration Release
+          --no-build
+          --verbosity normal
+          --collect:"XPlat Code Coverage"
+          --results-directory TestResults
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage
+          path: TestResults/**
+          if-no-files-found: warn
+          retention-days: 14

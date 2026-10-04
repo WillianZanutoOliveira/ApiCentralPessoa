@@ -19,6 +19,10 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ApiCentralPessoa.Infrastructure.GlobalExceptionHandler>();
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -26,6 +30,8 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<CentralPessoaContext>();
     dbContext.Database.EnsureCreated();
 }
+
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
@@ -35,6 +41,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

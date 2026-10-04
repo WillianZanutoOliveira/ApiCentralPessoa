@@ -16,6 +16,10 @@ The project demonstrates CRUD operations, domain entities, relational persistenc
 - DTOs and explicit mapping
 - Swagger / OpenAPI
 - asynchronous database operations
+- centralized error handling with Problem Details
+- health endpoint for operational checks
+- automated tests with NUnit and EF Core InMemory
+- CI with code-coverage artifacts
 
 ## Domain
 
@@ -36,6 +40,8 @@ The API models information related to:
 - **MySQL**
 - **MySql.EntityFrameworkCore**
 - **Swagger / OpenAPI**
+- **NUnit**
+- **GitHub Actions**
 
 > This project was created in 2023 and later modernized to **.NET 10**, with updated MySQL integration, safer configuration practices and CI validation.
 
@@ -86,6 +92,12 @@ dotnet run --project ApiCentralPessoa.csproj
 
 Swagger is enabled in the development environment and can be used to inspect and test the endpoints.
 
+Operational health is exposed at:
+
+```text
+GET /health
+```
+
 ## Database
 
 The project uses Entity Framework Core with MySQL. The repository includes entity configuration and migrations-related structure.
@@ -95,11 +107,10 @@ The project uses Entity Framework Core with MySQL. The repository includes entit
 Because this is an earlier portfolio project, there are areas I would approach differently in a current production system, including:
 
 - clearer separation between composition/configuration and persistence;
-- stronger automated test coverage;
+- broader integration-test coverage across additional controllers;
 - standardized migrations strategy;
-- structured validation and error handling;
-- CI/CD and containerized local execution;
-- observability and health checks.
+- containerized local execution;
+- richer observability and database-aware health checks.
 
 Showing that evolution is intentional: I use older public projects to demonstrate the progression from application development toward **senior software engineering and architecture**.
 
@@ -128,3 +139,20 @@ dotnet run
 ```
 
 This keeps credentials outside version control and better reflects production configuration practices.
+
+
+## Tests
+
+Run the automated test suite with:
+
+```bash
+dotnet test ApiCentralPessoa.sln
+```
+
+The public CI pipeline runs the same solution build and test flow and collects code coverage as a GitHub Actions artifact.
+
+## API resilience
+
+Unhandled exceptions are processed through a centralized exception handler and returned using the ASP.NET Core **Problem Details** format.
+
+With `[ApiController]` and DataAnnotations, invalid request models are returned as structured HTTP 400 validation responses.
