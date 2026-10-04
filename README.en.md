@@ -17,7 +17,7 @@
 
 Production-style portfolio API for managing individuals, companies, addresses and phone information, with emphasis on **secure configuration, validation, operational health and automated quality checks**.
 
-**Quick links:** [Architecture](docs/architecture.md) · [ADR](docs/adr/0001-modernize-to-dotnet-10.md) · [Security](SECURITY.md) · [CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
+**Quick links:** [Architecture](docs/architecture.en.md) · [ADR](docs/adr/0001-modernize-to-dotnet-10.en.md) · [Security](SECURITY.en.md) · [CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
 
 ## What this project demonstrates
 
@@ -61,9 +61,9 @@ The API models information related to:
 
 ## Engineering documentation
 
-- [Architecture](docs/architecture.md)
-- [ADR-0001 — Modernize to .NET 10](docs/adr/0001-modernize-to-dotnet-10.md)
-- [Security & configuration](SECURITY.md)
+- [Architecture](docs/architecture.en.md)
+- [ADR-0001 — Modernize to .NET 10](docs/adr/0001-modernize-to-dotnet-10.en.md)
+- [Security & configuration](SECURITY.en.md)
 
 ## Architecture overview
 
