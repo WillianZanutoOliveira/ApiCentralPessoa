@@ -4,100 +4,97 @@
 
 Central Pessoa is a REST API for managing person-related data such as individuals, companies, addresses and phone information.
 
-The project uses a straightforward layered structure suitable for a portfolio API while keeping persistence concerns separate from HTTP endpoints.
+The project keeps a deliberately understandable structure while demonstrating API design, persistence, validation, operational health and automated quality gates.
 
 ```mermaid
 flowchart LR
-    Client[HTTP Client] --> Controllers[ASP.NET Core Controllers]
-    Controllers --> DTOs[DTOs / Request Models]
-    Controllers --> Domain[Domain Entities]
+    Client[HTTP Client] --> API[ASP.NET Core Controllers]
+    API --> DTO[DTOs / Validation]
+    API --> Domain[Domain Entities]
     Domain --> EF[EF Core DbContext]
     Config[Entity Configurations] --> EF
     EF --> MySQL[(MySQL)]
+
+    API --> Errors[Problem Details / Global Exception Handler]
+    Health[/health] --> App[Application Health]
+    Tests[NUnit + EF InMemory] --> API
+    CI[GitHub Actions] --> Tests
 ```
 
-## Main responsibilities
+## HTTP/API layer
 
-### Controllers
+Controllers expose REST endpoints and coordinate application behavior.
 
-Controllers expose the REST endpoints and coordinate application behavior.
+ASP.NET Core `[ApiController]` conventions provide automatic validation responses for invalid models. DataAnnotations strengthen validation for common fields such as names, e-mail addresses and phone-type descriptions.
 
-They are responsible for:
+## Error handling
 
-- receiving HTTP requests;
-- validating basic request flow;
-- loading and updating entities through EF Core;
-- returning HTTP responses.
+Unhandled exceptions flow through a centralized `IExceptionHandler` implementation.
 
-### DTOs
+The API returns structured **Problem Details** responses instead of leaking implementation details or raw exception output.
 
-DTOs define transport-focused representations used by the API.
+## Domain and persistence
 
-This avoids coupling the external HTTP contract directly to every internal persistence concern.
+The project models:
 
-### Domain entities
+- people;
+- individuals;
+- companies;
+- addresses;
+- phone numbers and phone types;
+- related family information.
 
-The project models concepts including:
+Persistence uses Entity Framework Core with explicit `IEntityTypeConfiguration<T>` mappings and MySQL through `MySql.EntityFrameworkCore`.
 
-- person;
-- individual;
-- company;
-- address;
-- phone;
-- phone type;
-- parent-related information.
+## Configuration security
 
-### Persistence
+Database credentials are intentionally excluded from tracked configuration.
 
-Persistence is implemented using:
-
-- Entity Framework Core;
-- `CentralPessoaContext`;
-- explicit `IEntityTypeConfiguration<T>` mappings;
-- MySQL through `MySql.EntityFrameworkCore`.
-
-## Configuration
-
-Database credentials are not stored in tracked source configuration.
-
-The connection string is supplied using:
-
-- environment variables; or
-- .NET user-secrets for local development.
-
-Expected configuration key:
+The connection string is supplied using environment variables or .NET user-secrets:
 
 ```text
 ConnectionStrings__DefaultConnection
 ```
 
-## Startup
+## Operational health
 
-The application validates that a connection string exists before configuring the DbContext.
+A lightweight health endpoint is exposed at:
 
-For this portfolio project, the database schema is initialized at startup with `EnsureCreated()`.
+```text
+GET /health
+```
 
-For a larger production system, I would prefer a controlled migration/deployment strategy rather than schema creation as an application-startup responsibility.
+This gives deployment platforms and operators a stable endpoint for application liveness checks.
 
-## API documentation
+## Testing strategy
 
-Swagger/OpenAPI is available in the development environment.
+The solution contains a dedicated NUnit test project.
 
-## CI
+Initial automated coverage focuses on the phone-type controller and validates:
 
-GitHub Actions restores and builds the solution using .NET 10 for changes targeting the main branch.
+- not-found behavior;
+- persistence on create;
+- update behavior.
 
-## Modernization
+Tests use EF Core InMemory to keep the feedback loop fast and deterministic.
 
-The project was originally built on .NET 7 and modernized to .NET 10.
+## CI quality gate
 
-Key modernization work included:
+GitHub Actions:
 
-- .NET 10 target framework;
-- current MySQL EF Core provider;
-- removal of tracked database credentials;
-- removal of database side effects from the DbContext constructor;
-- updated OpenAPI dependencies;
-- CI validation before merge.
+1. restores dependencies;
+2. builds the solution in Release mode;
+3. executes automated tests;
+4. collects XPlat code coverage;
+5. publishes coverage output as a build artifact.
 
-See [ADR-0001](adr/0001-modernize-to-dotnet-10.md).
+## Modernization history
+
+The project was originally built on .NET 7 and later modernized to .NET 10.
+
+The modernization also included safer configuration, dependency cleanup and migration-provider updates. Subsequent quality hardening added validation, Problem Details, health checks and automated tests.
+
+See:
+
+- [ADR-0001 — Modernize to .NET 10](adr/0001-modernize-to-dotnet-10.md)
+- [Security](../SECURITY.md)
