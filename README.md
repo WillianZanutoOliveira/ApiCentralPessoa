@@ -1,5 +1,7 @@
 <div align="center">
 
+[🇺🇸 English](README.en.md)
+
 # Central Pessoa API
 
 ### .NET 10 REST API · EF Core · MySQL · Validation · Problem Details
@@ -13,36 +15,36 @@
 
 </div>
 
-Production-style portfolio API for managing individuals, companies, addresses and phone information, with emphasis on **secure configuration, validation, operational health and automated quality checks**.
+API de portfólio com estilo de produção para gerenciamento de pessoas físicas, pessoas jurídicas, endereços e telefones, com foco em **configuração segura, validação, saúde operacional e verificações automatizadas de qualidade**.
 
-**Quick links:** [Architecture](docs/architecture.md) · [ADR](docs/adr/0001-modernize-to-dotnet-10.md) · [Security](SECURITY.md) · [CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
+**Links rápidos:** [Arquitetura](docs/architecture.md) · [ADR](docs/adr/0001-modernize-to-dotnet-10.md) · [Segurança](SECURITY.md) · [CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
 
-## What this project demonstrates
+## O que este projeto demonstra
 
 - ASP.NET Core Web API
-- RESTful CRUD endpoints
+- endpoints RESTful de CRUD
 - Entity Framework Core
-- MySQL persistence
-- entity configuration
-- DTOs and explicit mapping
+- persistência com MySQL
+- configuração de entidades
+- DTOs e mapeamento explícito
 - Swagger / OpenAPI
-- asynchronous database operations
-- centralized error handling with Problem Details
-- health endpoint for operational checks
-- automated tests with NUnit and EF Core InMemory
-- CI with code-coverage artifacts
+- operações assíncronas de banco de dados
+- tratamento centralizado de erros com Problem Details
+- endpoint de health check para verificações operacionais
+- testes automatizados com NUnit e EF Core InMemory
+- CI com artefatos de cobertura de código
 
-## Domain
+## Domínio
 
-The API models information related to:
+A API modela informações relacionadas a:
 
-- individuals;
-- companies;
-- addresses;
-- phone numbers and phone types;
-- related person information.
+- pessoas físicas;
+- pessoas jurídicas;
+- endereços;
+- telefones e tipos de telefone;
+- informações de pessoas relacionadas.
 
-## Tech stack
+## Stack técnica
 
 - **C#**
 - **.NET 10**
@@ -55,25 +57,25 @@ The API models information related to:
 - **GitHub Actions**
 - **Docker / Docker Compose**
 
-> This project was created in 2023 and later modernized to **.NET 10**, with updated MySQL integration, safer configuration practices and CI validation.
+> Este projeto foi criado em 2023 e posteriormente modernizado para **.NET 10**, com integração MySQL atualizada, práticas de configuração mais seguras e validação pelo CI.
 
-## Engineering documentation
+## Documentação de engenharia
 
-- [Architecture](docs/architecture.md)
-- [ADR-0001 — Modernize to .NET 10](docs/adr/0001-modernize-to-dotnet-10.md)
-- [Security & configuration](SECURITY.md)
+- [Arquitetura](docs/architecture.md)
+- [ADR-0001 — Modernização para .NET 10](docs/adr/0001-modernize-to-dotnet-10.md)
+- [Segurança e configuração](SECURITY.md)
 
-## Architecture overview
+## Visão geral da arquitetura
 
 ```text
-HTTP Client
+Cliente HTTP
     |
     v
 ASP.NET Core Controllers
     |
-    +--> DTOs / explicit mapping
+    +--> DTOs / mapeamento explícito
     |
-    +--> Domain entities
+    +--> Entidades de domínio
     |
     +--> EF Core DbContext
              |
@@ -81,60 +83,59 @@ ASP.NET Core Controllers
            MySQL
 ```
 
-## Running locally
+## Executando localmente
 
-### Requirements
+### Requisitos
 
 - .NET 10 SDK
 - MySQL
 
-Clone the repository:
+Clone o repositório:
 
 ```bash
 git clone https://github.com/WillianZanutoOliveira/ApiCentralPessoa.git
 cd ApiCentralPessoa
 ```
 
-Configure the database connection string in the application configuration and then run:
+Configure a connection string do banco na configuração da aplicação e execute:
 
 ```bash
 dotnet restore
 dotnet run --project ApiCentralPessoa.csproj
 ```
 
-Swagger is enabled in the development environment and can be used to inspect and test the endpoints.
+O Swagger fica habilitado no ambiente de desenvolvimento e pode ser usado para inspecionar e testar os endpoints.
 
-Operational health is exposed at:
+A saúde operacional é exposta em:
 
 ```text
 GET /health
 ```
 
-## Database
+## Banco de dados
 
-The project uses Entity Framework Core with MySQL. The repository includes entity configuration and migrations-related structure.
+O projeto utiliza Entity Framework Core com MySQL. O repositório inclui configuração das entidades e estrutura relacionada a migrations.
 
-## Engineering evolution
+## Evolução de engenharia
 
-Because this is an earlier portfolio project, there are areas I would approach differently in a current production system, including:
+Como este é um projeto anterior do portfólio, existem pontos que eu trataria de forma diferente em um sistema atual de produção, incluindo:
 
-- clearer separation between composition/configuration and persistence;
-- broader integration-test coverage across additional controllers;
-- standardized migrations strategy;
-- containerized local execution;
-- richer observability and database-aware health checks.
+- separação mais clara entre composição/configuração e persistência;
+- cobertura mais ampla de testes de integração para os demais controllers;
+- estratégia padronizada de migrations;
+- execução local totalmente containerizada;
+- observabilidade mais rica e health checks conscientes do estado do banco.
 
-Showing that evolution is intentional: I use older public projects to demonstrate the progression from application development toward **senior software engineering and architecture**.
+Mostrar essa evolução é intencional: utilizo projetos públicos mais antigos para evidenciar a progressão de desenvolvimento de aplicações para **engenharia de software sênior e arquitetura**.
 
-For current case studies and my professional profile:
+Para cases atuais e meu perfil profissional:
 - https://github.com/WillianZanutoOliveira
 
+## Configuração local segura
 
-## Secure local configuration
+Credenciais de banco são intencionalmente **não versionadas** no repositório.
 
-Database credentials are intentionally **not committed** to the repository.
-
-Configure the connection string using an environment variable or user-secrets.
+Configure a connection string por variável de ambiente ou user-secrets.
 
 ### PowerShell
 
@@ -150,45 +151,44 @@ export ConnectionStrings__DefaultConnection="Server=localhost;Port=3306;Database
 dotnet run
 ```
 
-This keeps credentials outside version control and better reflects production configuration practices.
-
+Isso mantém credenciais fora do controle de versão e se aproxima melhor das práticas de configuração usadas em produção.
 
 ## Docker Compose
 
-A complete local environment is available with the API and MySQL.
+Um ambiente local completo está disponível com a API e o MySQL.
 
-Create your local environment file:
+Crie seu arquivo local de ambiente:
 
 ```bash
 cp .env.example .env
 ```
 
-Change the example passwords in `.env` and start the stack:
+Altere as senhas de exemplo no arquivo `.env` e suba a stack:
 
 ```bash
 docker compose up --build
 ```
 
-The API will be available at:
+A API ficará disponível em:
 
 ```text
 http://localhost:8080
 ```
 
-The `.env` file is ignored by Git so local credentials are not versioned.
+O arquivo `.env` é ignorado pelo Git, portanto credenciais locais não são versionadas.
 
-## Tests
+## Testes
 
-Run the automated test suite with:
+Execute a suíte de testes automatizados com:
 
 ```bash
 dotnet test ApiCentralPessoa.sln
 ```
 
-The public CI pipeline runs the same solution build and test flow and collects code coverage as a GitHub Actions artifact.
+O pipeline público de CI executa o mesmo fluxo de build e testes da solution e coleta cobertura de código como artefato do GitHub Actions.
 
-## API resilience
+## Resiliência da API
 
-Unhandled exceptions are processed through a centralized exception handler and returned using the ASP.NET Core **Problem Details** format.
+Exceções não tratadas são processadas por um handler centralizado e retornadas usando o formato **Problem Details** do ASP.NET Core.
 
-With `[ApiController]` and DataAnnotations, invalid request models are returned as structured HTTP 400 validation responses.
+Com `[ApiController]` e DataAnnotations, modelos de requisição inválidos são retornados como respostas HTTP 400 estruturadas.
