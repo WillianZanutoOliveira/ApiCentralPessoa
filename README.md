@@ -1,5 +1,7 @@
 # Central Pessoa API
 
+[![CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml/badge.svg)](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
+
 REST API built with **C# / ASP.NET Core** for managing individuals and companies, including related addresses and phone information.
 
 The project demonstrates CRUD operations, domain entities, relational persistence and API documentation.
