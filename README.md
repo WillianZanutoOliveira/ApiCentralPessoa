@@ -1,49 +1,100 @@
-# ApiCentralPessoa
-Desenvolver uma aplicação com API para cadastro de pessoa Física e jurídica. 
+# Central Pessoa API
 
-## Retorno da API
-- Implementar as operações de criação (POST), consulta (GET) (Por Id e GetAll), atualização (PUT) e exclusão (DELETE) de todas as entidades.
+REST API built with **C# / ASP.NET Core** for managing individuals and companies, including related addresses and phone information.
 
-## Requisitos
+The project demonstrates CRUD operations, domain entities, relational persistence and API documentation.
 
-- .NET 7.0 SDK instalado ([Download](https://dotnet.microsoft.com/pt-br/download/dotnet/7.0))
-- .NET CLI instalado ([Download](https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/install-ml-net-cli?tabs=windows))
-- Visual Studio ou Visual Studio Code (opcional)
-- Banco MySql
+## What this project demonstrates
 
-## Caso inicie um novo banco de dados rodar os comandos abaixo para rodar as Migrations:
+- ASP.NET Core Web API
+- RESTful CRUD endpoints
+- Entity Framework Core
+- MySQL persistence
+- entity configuration
+- DTOs and AutoMapper
+- Swagger / OpenAPI
+- asynchronous database operations
 
-```bash
+## Domain
 
-dotnet ef migrations add InitialCreate
- 
-dotnet ef database update
+The API models information related to:
+
+- individuals;
+- companies;
+- addresses;
+- phone numbers and phone types;
+- related person information.
+
+## Tech stack
+
+- **C#**
+- **.NET 7**
+- **ASP.NET Core**
+- **Entity Framework Core**
+- **MySQL**
+- **Pomelo.EntityFrameworkCore.MySql**
+- **AutoMapper**
+- **Swagger / OpenAPI**
+
+> This project was created in 2023 and is maintained as a public portfolio example of my .NET development history. My current work uses broader architectural, integration, cloud and delivery practices.
+
+## Architecture overview
+
+```text
+HTTP Client
+    |
+    v
+ASP.NET Core Controllers
+    |
+    +--> DTOs / mapping
+    |
+    +--> Domain entities
+    |
+    +--> EF Core DbContext
+             |
+             v
+           MySQL
 ```
 
-## Configuração
+## Running locally
 
-1. Clone o repositório para o seu ambiente local:
-   ```bash
-   git clone https://github.com/WillianZanutoOliveira/ApiCentralPessoa.git
-   ```
-   
-2. Abra o projeto no Visual Studio ou Visual Studio Code.
+### Requirements
 
+- .NET 7 SDK
+- MySQL
 
-## Executando o projeto
-
-### Visual Studio
-
-- Clique em "Start" ou pressione F5 para iniciar a aplicação.
-
-### Visual Studio Code
-
-- Abra um terminal na pasta do projeto e execute o seguinte comando:
+Clone the repository:
 
 ```bash
+git clone https://github.com/WillianZanutoOliveira/ApiCentralPessoa.git
+cd ApiCentralPessoa
+```
+
+Configure the database connection string in the application configuration and then run:
+
+```bash
+dotnet restore
 dotnet run --project ApiCentralPessoa.csproj
 ```
 
-## Executando o projeto
+Swagger is enabled in the development environment and can be used to inspect and test the endpoints.
 
-- O projeto tem o swagger implementado da API será executado e estará disponível na URL [https://localhost:7017;http://localhost:5159] ou verifique no cmd qual é a porta que ele está rodando o projeto.
+## Database
+
+The project uses Entity Framework Core with MySQL. The repository includes entity configuration and migrations-related structure.
+
+## Engineering evolution
+
+Because this is an earlier portfolio project, there are areas I would approach differently in a current production system, including:
+
+- clearer separation between composition/configuration and persistence;
+- stronger automated test coverage;
+- standardized migrations strategy;
+- structured validation and error handling;
+- CI/CD and containerized local execution;
+- observability and health checks.
+
+Showing that evolution is intentional: I use older public projects to demonstrate the progression from application development toward **senior software engineering and architecture**.
+
+For current case studies and my professional profile:
+- https://github.com/WillianZanutoOliveira
