@@ -13,7 +13,7 @@ The project demonstrates CRUD operations, domain entities, relational persistenc
 - Entity Framework Core
 - MySQL persistence
 - entity configuration
-- DTOs and AutoMapper
+- DTOs and explicit mapping
 - Swagger / OpenAPI
 - asynchronous database operations
 
@@ -35,10 +35,15 @@ The API models information related to:
 - **Entity Framework Core**
 - **MySQL**
 - **MySql.EntityFrameworkCore**
-- **AutoMapper**
 - **Swagger / OpenAPI**
 
 > This project was created in 2023 and later modernized to **.NET 10**, with updated MySQL integration, safer configuration practices and CI validation.
+
+## Engineering documentation
+
+- [Architecture](docs/architecture.md)
+- [ADR-0001 — Modernize to .NET 10](docs/adr/0001-modernize-to-dotnet-10.md)
+- [Security & configuration](SECURITY.md)
 
 ## Architecture overview
 
@@ -48,7 +53,7 @@ HTTP Client
     v
 ASP.NET Core Controllers
     |
-    +--> DTOs / mapping
+    +--> DTOs / explicit mapping
     |
     +--> Domain entities
     |
