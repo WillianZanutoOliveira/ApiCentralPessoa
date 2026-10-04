@@ -19,6 +19,8 @@ flowchart LR
     Health[/health] --> App[Application Health]
     Tests[NUnit + EF InMemory] --> API
     CI[GitHub Actions] --> Tests
+    CI --> Container[Docker image]
+    Container --> MySQL
 ```
 
 ## HTTP/API layer
@@ -98,3 +100,20 @@ See:
 
 - [ADR-0001 — Modernize to .NET 10](adr/0001-modernize-to-dotnet-10.md)
 - [Security](../SECURITY.md)
+
+
+## Containerized local development
+
+The repository includes a multi-stage .NET 10 Dockerfile and a Docker Compose configuration that starts:
+
+- the ASP.NET Core API;
+- MySQL 8.4;
+- a persistent local database volume.
+
+Secrets are supplied through a local `.env` file based on `.env.example`. The real `.env` file is excluded from version control.
+
+The CI pipeline builds the Docker image after the solution build and automated tests, providing an additional delivery-level quality gate.
+
+## Dependency maintenance
+
+Dependabot checks NuGet and GitHub Actions dependencies monthly and can open focused update pull requests.
