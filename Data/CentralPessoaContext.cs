@@ -1,12 +1,12 @@
-﻿using ApiCentralPessoa.EntityConfiguration;
+using ApiCentralPessoa.EntityConfiguration;
 
 namespace ApiCentralPessoa.Data;
 
-public class CentralPessoaContext: DbContext
+public class CentralPessoaContext : DbContext
 {
-    public CentralPessoaContext(DbContextOptions<CentralPessoaContext> options) : base(options)
+    public CentralPessoaContext(DbContextOptions<CentralPessoaContext> options)
+        : base(options)
     {
-        Database.EnsureCreated();
     }
 
     public DbSet<Pessoa> Pessoas { get; set; }
