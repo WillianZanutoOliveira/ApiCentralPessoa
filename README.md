@@ -42,6 +42,7 @@ The API models information related to:
 - **Swagger / OpenAPI**
 - **NUnit**
 - **GitHub Actions**
+- **Docker / Docker Compose**
 
 > This project was created in 2023 and later modernized to **.NET 10**, with updated MySQL integration, safer configuration practices and CI validation.
 
@@ -140,6 +141,30 @@ dotnet run
 
 This keeps credentials outside version control and better reflects production configuration practices.
 
+
+## Docker Compose
+
+A complete local environment is available with the API and MySQL.
+
+Create your local environment file:
+
+```bash
+cp .env.example .env
+```
+
+Change the example passwords in `.env` and start the stack:
+
+```bash
+docker compose up --build
+```
+
+The API will be available at:
+
+```text
+http://localhost:8080
+```
+
+The `.env` file is ignored by Git so local credentials are not versioned.
 
 ## Tests
 
