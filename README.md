@@ -1,10 +1,21 @@
+<div align="center">
+
 # Central Pessoa API
 
+### .NET 10 REST API · EF Core · MySQL · Validation · Problem Details
+
 [![CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml/badge.svg)](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
+![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
+![EF Core](https://img.shields.io/badge/EF%20Core-Persistence-512BD4)
+![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-NUnit-22C55E)
+![Docker](https://img.shields.io/badge/Docker%20Compose-Ready-2496ED?logo=docker&logoColor=white)
 
-REST API built with **C# / ASP.NET Core** for managing individuals and companies, including related addresses and phone information.
+</div>
 
-The project demonstrates CRUD operations, domain entities, relational persistence and API documentation.
+Production-style portfolio API for managing individuals, companies, addresses and phone information, with emphasis on **secure configuration, validation, operational health and automated quality checks**.
+
+**Quick links:** [Architecture](docs/architecture.md) · [ADR](docs/adr/0001-modernize-to-dotnet-10.md) · [Security](SECURITY.md) · [CI](https://github.com/WillianZanutoOliveira/ApiCentralPessoa/actions/workflows/ci.yml)
 
 ## What this project demonstrates
 
