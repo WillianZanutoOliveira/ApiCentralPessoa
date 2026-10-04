@@ -1,119 +1,120 @@
-# Architecture
+[🇺🇸 English](architecture.en.md)
 
-## Overview
+# Arquitetura
 
-Central Pessoa is a REST API for managing person-related data such as individuals, companies, addresses and phone information.
+## Visão geral
 
-The project keeps a deliberately understandable structure while demonstrating API design, persistence, validation, operational health and automated quality gates.
+Central Pessoa é uma API REST para gerenciamento de dados relacionados a pessoas, como pessoas físicas, empresas, endereços e informações de telefone.
+
+O projeto mantém uma estrutura deliberadamente simples de compreender, ao mesmo tempo em que demonstra design de API, persistência, validação, saúde operacional e quality gates automatizados.
 
 ```mermaid
 flowchart LR
-    Client[HTTP Client] --> API[ASP.NET Core Controllers]
-    API --> DTO[DTOs / Validation]
-    API --> Domain[Domain Entities]
+    Client[Cliente HTTP] --> API[ASP.NET Core Controllers]
+    API --> DTO[DTOs / Validação]
+    API --> Domain[Entidades de domínio]
     Domain --> EF[EF Core DbContext]
-    Config[Entity Configurations] --> EF
+    Config[Configurações de entidades] --> EF
     EF --> MySQL[(MySQL)]
 
     API --> Errors[Problem Details / Global Exception Handler]
-    Health[/health] --> App[Application Health]
+    Health[/health] --> App[Saúde da aplicação]
     Tests[NUnit + EF InMemory] --> API
     CI[GitHub Actions] --> Tests
-    CI --> Container[Docker image]
+    CI --> Container[Imagem Docker]
     Container --> MySQL
 ```
 
-## HTTP/API layer
+## Camada HTTP/API
 
-Controllers expose REST endpoints and coordinate application behavior.
+Os controllers expõem endpoints REST e coordenam o comportamento da aplicação.
 
-ASP.NET Core `[ApiController]` conventions provide automatic validation responses for invalid models. DataAnnotations strengthen validation for common fields such as names, e-mail addresses and phone-type descriptions.
+As convenções do ASP.NET Core `[ApiController]` fornecem respostas automáticas de validação para modelos inválidos. DataAnnotations reforçam a validação de campos comuns como nomes, e-mails e descrições de tipos de telefone.
 
-## Error handling
+## Tratamento de erros
 
-Unhandled exceptions flow through a centralized `IExceptionHandler` implementation.
+Exceções não tratadas passam por uma implementação centralizada de `IExceptionHandler`.
 
-The API returns structured **Problem Details** responses instead of leaking implementation details or raw exception output.
+A API retorna respostas estruturadas em **Problem Details** em vez de expor detalhes de implementação ou exceções brutas.
 
-## Domain and persistence
+## Domínio e persistência
 
-The project models:
+O projeto modela:
 
-- people;
-- individuals;
-- companies;
-- addresses;
-- phone numbers and phone types;
-- related family information.
+- pessoas;
+- pessoas físicas;
+- empresas;
+- endereços;
+- telefones e tipos de telefone;
+- informações familiares relacionadas.
 
-Persistence uses Entity Framework Core with explicit `IEntityTypeConfiguration<T>` mappings and MySQL through `MySql.EntityFrameworkCore`.
+A persistência utiliza Entity Framework Core com mapeamentos explícitos via `IEntityTypeConfiguration<T>` e MySQL por meio de `MySql.EntityFrameworkCore`.
 
-## Configuration security
+## Segurança da configuração
 
-Database credentials are intentionally excluded from tracked configuration.
+Credenciais de banco são intencionalmente excluídas da configuração versionada.
 
-The connection string is supplied using environment variables or .NET user-secrets:
+A connection string é fornecida por variáveis de ambiente ou .NET user-secrets:
 
 ```text
 ConnectionStrings__DefaultConnection
 ```
 
-## Operational health
+## Saúde operacional
 
-A lightweight health endpoint is exposed at:
+Um endpoint leve de health check é exposto em:
 
 ```text
 GET /health
 ```
 
-This gives deployment platforms and operators a stable endpoint for application liveness checks.
+Isso oferece às plataformas de deployment e operadores um endpoint estável para verificações de liveness da aplicação.
 
-## Testing strategy
+## Estratégia de testes
 
-The solution contains a dedicated NUnit test project.
+A solução contém um projeto NUnit dedicado.
 
-Initial automated coverage focuses on the phone-type controller and validates:
+A cobertura automatizada inicial foca no controller de tipos de telefone e valida:
 
-- not-found behavior;
-- persistence on create;
-- update behavior.
+- comportamento de not-found;
+- persistência na criação;
+- comportamento de atualização.
 
-Tests use EF Core InMemory to keep the feedback loop fast and deterministic.
+Os testes usam EF Core InMemory para manter o ciclo de feedback rápido e determinístico.
 
-## CI quality gate
+## Quality gate no CI
 
-GitHub Actions:
+O GitHub Actions:
 
-1. restores dependencies;
-2. builds the solution in Release mode;
-3. executes automated tests;
-4. collects XPlat code coverage;
-5. publishes coverage output as a build artifact.
+1. restaura dependências;
+2. compila a solução em modo Release;
+3. executa testes automatizados;
+4. coleta cobertura de código XPlat;
+5. publica a cobertura como artefato de build.
 
-## Modernization history
+## Histórico de modernização
 
-The project was originally built on .NET 7 and later modernized to .NET 10.
+O projeto foi construído originalmente em .NET 7 e posteriormente modernizado para .NET 10.
 
-The modernization also included safer configuration, dependency cleanup and migration-provider updates. Subsequent quality hardening added validation, Problem Details, health checks and automated tests.
+A modernização também incluiu configuração mais segura, limpeza de dependências e atualização do provider de migrations. Um hardening posterior adicionou validação, Problem Details, health checks e testes automatizados.
 
-See:
+Consulte:
 
-- [ADR-0001 — Modernize to .NET 10](adr/0001-modernize-to-dotnet-10.md)
-- [Security](../SECURITY.md)
+- [ADR-0001 — Modernização para .NET 10](adr/0001-modernize-to-dotnet-10.md)
+- [Segurança](../SECURITY.md)
 
+## Desenvolvimento local containerizado
 
-## Containerized local development
+O repositório inclui um Dockerfile multi-stage em .NET 10 e uma configuração Docker Compose que inicia:
 
-The repository includes a multi-stage .NET 10 Dockerfile and a Docker Compose configuration that starts:
-
-- the ASP.NET Core API;
+- a API ASP.NET Core;
 - MySQL 8.4;
-- a persistent local database volume.
+- um volume local persistente para o banco.
 
-Secrets are supplied through a local `.env` file based on `.env.example`. The real `.env` file is excluded from version control.
+Segredos são fornecidos por um arquivo local `.env` baseado em `.env.example`. O arquivo `.env` real fica excluído do controle de versão.
 
-The CI pipeline builds the Docker image after the solution build and automated tests, providing an additional delivery-level quality gate.
+O pipeline de CI constrói a imagem Docker após o build da solução e os testes automatizados, adicionando um quality gate no nível de entrega.
 
-## Dependency maintenance
+## Manutenção de dependências
 
-Dependabot checks NuGet and GitHub Actions dependencies monthly and can open focused update pull requests.
+O Dependabot verifica mensalmente dependências NuGet e GitHub Actions e pode abrir Pull Requests focados em atualizações.

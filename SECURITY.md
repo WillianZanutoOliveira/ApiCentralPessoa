@@ -1,35 +1,37 @@
-# Security
+[🇺🇸 English](SECURITY.en.md)
 
-## Secrets and credentials
+# Segurança
 
-Do not commit database passwords, API keys, tokens or other credentials to this repository.
+## Segredos e credenciais
 
-The application expects the MySQL connection string from configuration outside source control.
+Não versione senhas de banco de dados, chaves de API, tokens ou outras credenciais neste repositório.
 
-### Environment variable
+A aplicação espera receber a connection string do MySQL por configuração externa ao controle de versão.
+
+### Variável de ambiente
 
 ```text
 ConnectionStrings__DefaultConnection
 ```
 
-Example for local development:
+Exemplo para desenvolvimento local:
 
 ```powershell
 $env:ConnectionStrings__DefaultConnection="Server=localhost;Port=3306;Database=centralPessoa;Uid=YOUR_USER;Pwd=YOUR_PASSWORD;"
 ```
 
-Use .NET user-secrets as an alternative for local development.
+Como alternativa para desenvolvimento local, utilize .NET user-secrets.
 
-## Production guidance
+## Orientações para produção
 
-For a production deployment:
+Para um deployment em produção:
 
-- use a managed secret store or deployment-time secret injection;
-- use a dedicated least-privilege database user;
-- never reuse local development passwords;
-- rotate credentials if exposure is suspected;
-- keep dependency and vulnerability scanning enabled.
+- utilize um cofre de segredos gerenciado ou injeção de segredos no momento do deployment;
+- use um usuário de banco dedicado com privilégio mínimo;
+- nunca reutilize senhas do ambiente de desenvolvimento local;
+- rotacione credenciais caso exista suspeita de exposição;
+- mantenha verificações de dependências e vulnerabilidades habilitadas.
 
-## Reporting a security issue
+## Reportando um problema de segurança
 
-If you identify a security issue in this portfolio project, avoid publishing sensitive exploit details in a public issue. Contact the repository owner through the profile contact information instead.
+Se você identificar um problema de segurança neste projeto de portfólio, evite publicar detalhes sensíveis de exploração em uma issue pública. Entre em contato com o proprietário do repositório pelas informações de contato disponíveis no perfil.

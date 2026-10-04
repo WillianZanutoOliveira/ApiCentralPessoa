@@ -1,60 +1,62 @@
-# ADR-0001: Modernize Central Pessoa to .NET 10
+[🇺🇸 English](0001-modernize-to-dotnet-10.en.md)
 
-- **Status:** Accepted
-- **Date:** 2026-10-03
+# ADR-0001: Modernização do Central Pessoa para .NET 10
 
-## Context
+- **Status:** Aceito
+- **Data:** 2026-10-03
 
-Central Pessoa was originally created in 2023 using .NET 7 and an older MySQL EF Core provider.
+## Contexto
 
-As a public portfolio project, keeping an end-of-life runtime and tracked database credentials no longer represented the engineering standards expected from a current Senior .NET profile.
+O Central Pessoa foi criado originalmente em 2023 usando .NET 7 e um provider MySQL antigo para EF Core.
 
-## Decision
+Como projeto público de portfólio, manter um runtime fora de suporte e credenciais de banco versionadas deixou de representar os padrões de engenharia esperados de um perfil Senior .NET atual.
 
-Modernize the project to .NET 10 and improve configuration hygiene.
+## Decisão
 
-The change includes:
+Modernizar o projeto para .NET 10 e melhorar a higiene de configuração.
 
-- target framework changed to `net10.0`;
-- MySQL integration moved to the current `MySql.EntityFrameworkCore` provider;
-- EF Core design tooling aligned with the .NET 10 release line;
-- Swagger/OpenAPI dependencies updated;
-- database credentials removed from tracked `appsettings.json`;
-- connection string moved to environment/user-secret configuration;
-- database initialization removed from the DbContext constructor;
-- legacy migration metadata adapted to the current MySQL provider;
-- unused vulnerable AutoMapper packages removed;
-- GitHub Actions updated to build with .NET 10.
+A mudança inclui:
 
-## Why use a pull request
+- target framework alterado para `net10.0`;
+- integração MySQL migrada para o provider atual `MySql.EntityFrameworkCore`;
+- tooling de design do EF Core alinhado à linha de versões do .NET 10;
+- dependências Swagger/OpenAPI atualizadas;
+- credenciais de banco removidas do `appsettings.json` versionado;
+- connection string movida para configuração por ambiente/user-secrets;
+- inicialização do banco removida do construtor do DbContext;
+- metadados de migration legados adaptados ao provider MySQL atual;
+- pacotes AutoMapper vulneráveis e não utilizados removidos;
+- GitHub Actions atualizado para buildar com .NET 10.
 
-The modernization changes package versions, provider behavior and migration metadata.
+## Por que usar Pull Request
 
-To reduce risk, the work was performed in a dedicated branch and merged only after the GitHub Actions pipeline passed.
+A modernização altera versões de pacotes, comportamento do provider e metadados de migration.
 
-## Consequences
+Para reduzir risco, o trabalho foi feito em uma branch dedicada e integrado apenas depois que o pipeline do GitHub Actions passou.
 
-### Positive
+## Consequências
 
-- current .NET runtime;
-- cleaner dependency graph;
-- no database password in current tracked configuration;
-- safer DbContext construction;
-- public CI proof that the project builds;
-- clearer evidence of engineering evolution.
+### Positivas
+
+- runtime .NET atual;
+- grafo de dependências mais limpo;
+- nenhuma senha de banco na configuração atual versionada;
+- construção do DbContext mais segura;
+- prova pública no CI de que o projeto builda;
+- evidência mais clara da evolução de engenharia.
 
 ### Trade-offs
 
-- the project remains intentionally small;
-- database schema creation still uses `EnsureCreated()` for demo simplicity;
-- automated integration tests against MySQL are a future improvement.
+- o projeto permanece intencionalmente pequeno;
+- a criação do schema ainda usa `EnsureCreated()` pela simplicidade da demonstração;
+- testes automatizados de integração contra MySQL são uma melhoria futura.
 
-## Future improvements
+## Melhorias futuras
 
-Potential next steps:
+Possíveis próximos passos:
 
-- replace `EnsureCreated()` with a controlled migrations strategy;
-- add integration tests using disposable MySQL infrastructure;
-- add structured validation and Problem Details;
-- add health checks and observability;
-- containerize local development.
+- substituir `EnsureCreated()` por uma estratégia controlada de migrations;
+- adicionar testes de integração usando infraestrutura MySQL descartável;
+- ampliar validação estruturada e Problem Details;
+- adicionar health checks e observabilidade;
+- containerizar o desenvolvimento local.
